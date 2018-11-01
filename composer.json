@@ -1,0 +1,31 @@
+{
+    "name": "litphp/runner-swoole",
+    "license": "ISC",
+    "authors": [
+        {
+            "name": "McFog Wang",
+            "email": "mcfogw@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Lit\\Runner\\Swoole\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev",
+    "require": {
+        "ext-swoole": "^4",
+        "http-interop/http-factory-diactoros": "^1.0",
+        "litphp/bolt": "^0.9@dev",
+        "zendframework/zend-diactoros": "^1.8"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.9.x-dev"
+        }
+    }
+}
