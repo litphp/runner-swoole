@@ -20,7 +20,7 @@
     "require": {
         "ext-swoole": "^4",
         "http-interop/http-factory-diactoros": "^1.0",
-        "litphp/bolt": "^0.9@dev",
+        "litphp/bolt": "^0.9",
         "zendframework/zend-diactoros": "^1.8"
     },
     "extra": {
