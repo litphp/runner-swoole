@@ -19,9 +19,15 @@
     "minimum-stability": "dev",
     "require": {
         "ext-swoole": "^4",
-        "http-interop/http-factory-diactoros": "^1.0",
         "litphp/bolt": "^0.9",
-        "zendframework/zend-diactoros": "^1.8"
+        "zendframework/zend-diactoros": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5",
+        "phpstan/phpstan-shim": "^0.11.7",
+        "squizlabs/php_codesniffer": "^3.4",
+        "phpstan/phpstan-phpunit": "^0.11.2",
+        "swoole/ide-helper": "@dev"    
     },
     "extra": {
         "branch-alias": {

@@ -1,0 +1,8 @@
+parameters:
+  paths:
+    - src
+  level: 7
+  excludes_analyse:
+    - %currentWorkingDirectory%/_example
+  ignoreErrors:
+    - '#Result of \|\| is always true#'

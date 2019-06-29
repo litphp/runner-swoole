@@ -12,8 +12,11 @@ use Swoole\Http\Request;
 use Swoole\Http\Response;
 use Swoole\Http\Server;
 use Zend\Diactoros\ServerRequest;
-use Zend\Diactoros\ServerRequestFactory;
 use Zend\Diactoros\Stream;
+use function Zend\Diactoros\marshalHeadersFromSapi;
+use function Zend\Diactoros\marshalUriFromSapi;
+use function Zend\Diactoros\normalizeServer;
+use function Zend\Diactoros\normalizeUploadedFiles;
 
 class SwooleRunner
 {
@@ -75,10 +78,10 @@ class SwooleRunner
         foreach ($req->server as $key => $value) {
             $server[strtoupper($key)] = $value;
         }
-        $server = ServerRequestFactory::normalizeServer($server);
+        $server = normalizeServer($server);
 
         $files = isset($req->files)
-            ? ServerRequestFactory::normalizeFiles($req->files)
+            ? normalizeUploadedFiles($req->files)
             : [];
         $cookies = isset($req->cookie) ? $req->cookie : [];
         $query = isset($req->get) ? $req->get : [];
@@ -88,12 +91,12 @@ class SwooleRunner
         $stream->write($req->rawContent());
         $stream->rewind();
 
-        $headers = ServerRequestFactory::marshalHeaders($server);
+        $headers = marshalHeadersFromSapi($server);
         $request = new ServerRequest(
             $server,
             $files,
-            ServerRequestFactory::marshalUriFromServer($server, $headers),
-            ServerRequestFactory::get('REQUEST_METHOD', $server, 'GET'),
+            marshalUriFromSapi($server, $headers),
+            $server['REQUEST_METHOD'] ?? 'GET',
             $stream,
             $headers
         );

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Lit\Runner\Swoole;
 
-use Http\Factory\Diactoros\ResponseFactory;
 use Lit\Air\Configurator as C;
 use Lit\Bolt\BoltApp;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Swoole\Http\Server;
+use Zend\Diactoros\ResponseFactory;
 
 class SwooleConfiguration
 {
