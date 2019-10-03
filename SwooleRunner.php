@@ -18,6 +18,9 @@ use function Zend\Diactoros\marshalUriFromSapi;
 use function Zend\Diactoros\normalizeServer;
 use function Zend\Diactoros\normalizeUploadedFiles;
 
+/**
+ * swoole runner
+ */
 class SwooleRunner
 {
     protected const CHUNK_SIZE = 1048576;//1M
@@ -32,8 +35,9 @@ class SwooleRunner
 
     /**
      * SwooleRunner constructor.
-     * @param Server $swooleServer
-     * @param RequestHandlerInterface $requestHandler
+     *
+     * @param Server                  $swooleServer   The swoole server object.
+     * @param RequestHandlerInterface $requestHandler The request handler.
      */
     public function __construct(Server $swooleServer, RequestHandlerInterface $requestHandler)
     {
@@ -42,6 +46,11 @@ class SwooleRunner
     }
 
 
+    /**
+     * run a bolt app with swoole.
+     *
+     * @param array $config The application configuration.
+     */
     public static function run($config = [])
     {
         $container = $config instanceof ContainerInterface
@@ -51,7 +60,7 @@ class SwooleRunner
         $container->get(static::class)->work();
     }
 
-    public static function emitResponse(Response $res, ResponseInterface $psrRes)
+    protected static function emitResponse(Response $res, ResponseInterface $psrRes)
     {
         $res->status($psrRes->getStatusCode());
         foreach ($psrRes->getHeaders() as $name => $values) {
@@ -72,7 +81,7 @@ class SwooleRunner
         }
     }
 
-    public static function makePsrRequest(Request $req)
+    protected static function makePsrRequest(Request $req)
     {
         $server = [];
         foreach ($req->server as $key => $value) {
@@ -107,12 +116,18 @@ class SwooleRunner
             ->withParsedBody($body);
     }
 
-    public function work()
+    protected function work()
     {
         $this->swooleServer->on('request', [$this, 'onRequest']);
         $this->swooleServer->start();
     }
 
+    /**
+     * swoole request event handler
+     *
+     * @param Request  $req The swoole reqeust.
+     * @param Response $res The swoole response
+     */
     public function onRequest(Request $req, Response $res)
     {
         $psrReq = static::makePsrRequest($req);

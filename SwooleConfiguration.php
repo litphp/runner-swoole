@@ -11,8 +11,16 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Swoole\Http\Server;
 use Zend\Diactoros\ResponseFactory;
 
+/**
+ * swoole runner configuration class
+ */
 class SwooleConfiguration
 {
+    /**
+     * Return default configuration for swoole runner.
+     *
+     * @return array
+     */
     public static function default()
     {
         return [
